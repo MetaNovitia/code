@@ -4,3 +4,6 @@
 algorithms_db
 *.out
 *.in
+templates
+condense.py
+*.pdf
