@@ -1,0 +1,6 @@
+.DS_Store
+.help.swp
+.vscode
+algorithms_db
+*.out
+*.in
