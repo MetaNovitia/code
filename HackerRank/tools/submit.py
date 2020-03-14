@@ -110,7 +110,7 @@ def main():
 
 			if ans[0] == "post": upload(driver, "code/code."+ans[1])
 			elif ans[0] == "save":
-				if len(ans)<3: ans.append(f"{int(time.time())}")
+				if len(ans)<3: ans.append(f"{int(time.time())}-Save")
 				save(ans[2], ans[1])
 		
 		except: print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
