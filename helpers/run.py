@@ -1,9 +1,10 @@
 from os import system, mkdir
 from config import sites, pwd
 from urllib.parse import urlparse
+import big_o
 import re
 
-def startParser(site, link, directory):
+def openParser(site, link, directory):
 	print("Starting Parser...")
 	parser = site["parser"](site["full_prefix"], link, directory)
 	parser.feed()
@@ -36,7 +37,7 @@ def main():
 
 			site = sites[domain]
 			problem = getProblemName(site, path)
-			directory = makeDirectory(site, problem)
+			directory = getDirectories(site, problem)
 			parser = startParser(site, link, directory)
 
 	except ValueError as err:
@@ -46,4 +47,5 @@ def main():
 	print()
 
 if __name__ == "__main__":
-	main()
+	try: main()
+	except FileNotFoundError as err: print(err)

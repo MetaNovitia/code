@@ -21,26 +21,10 @@ class HackerRankParser(HTMLParser):
 		self.curr = None			# last seen data category
 		self.level = 0				# level in sidebar
 
-		self.data = {
-			"Title": None,
-			"Directory": directory,
-			"Links": {
-				"Problem": link,
-				"PDF": None,
-				"Test Case": None
-			},
-			"Data": {
-				"Difficulty": None,
-				"Max Score": None
-			}
-			"Status": {
-				"Best Time Complexity": None,
-				"Best Space Complexity": None,
-				"Best CodeGolf Length": None,
-				"Solve Status": None,
-				"Languages Used": None
-			}
-		}
+		self.data = {}
+		self.load("init.json")
+		self.data["Links"]["Problem"] = link
+		self.data["Directory"] = directory
 
 	def feed(self):
 		html = urlopen(self.data["Links"]["Problem"]).read().decode("utf-8")
@@ -109,8 +93,9 @@ class HackerRankParser(HTMLParser):
 		f.write(dumps(self.data, indent=4))
 		f.close()
 
-	def load(self):
-		f = open(self.data["Directory"]+"/problem.json", 'r')
+	def load(self, fname=None):
+		if fname==None: fname=self.data["Directory"]+"/problem.json"
+		f = open(fname, 'r')
 		self.data = loads(f.read())
 		f.close()
 

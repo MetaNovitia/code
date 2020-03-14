@@ -10,7 +10,9 @@ def startParser(site, link, directory):
 	parser.feed()
 	parser.process()
 	print("Parsing Finished!\n")
-	return parser
+
+def copyTemplates():
+	system("cp templates/* data")
 
 def getProblemName(site, path):
 	problem_match = re.match(site["problem_re"],path)
@@ -54,8 +56,9 @@ def main():
 
 			site = sites[domain]
 			problem = getProblemName(site, path)
-			directory = makeDirectory(site, problem)
-			parser = startParser(site, link, directory)
+			# directory = makeDirectory(site, problem)
+			# startParser(site, link, directory)
+			copyTemplates()
 
 	except ValueError as err:
 		print("ERROR:",err)

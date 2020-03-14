@@ -4,7 +4,6 @@
 algorithms_db
 *.out
 *.in
-*.json
 templates
 condense.py
 *.pdf
@@ -13,3 +12,4 @@ input
 output
 Makefile
 __pycache__
+tasks
