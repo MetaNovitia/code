@@ -1,7 +1,11 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 import time, os, sys
 from config import languages
+
+import logging
+from selenium.webdriver.remote.remote_connection import LOGGER
+LOGGER.setLevel(logging.WARNING)
 
 def add_code(driver, fname="code/code.py"):
 	driver.find_element_by_class_name("upload-file").click()
@@ -36,17 +40,18 @@ def upload(driver, fname="code/code.py"):
 	try:
 		ext = fname.split(".")[-1]
 		lang = languages[ext]
-		driver.find_element_by_id("react-select-2-input").send_keys(lang+"\n")
+		driver.find_element_by_id("react-select-2-input").send_keys(lang+u'\ue007')
 		add_code(driver, fname)
 		time.sleep(1); ct = 0
 		while(len(driver.find_elements_by_id("hr-monaco-loading-language"))):
 			ct+=1; time.sleep(1)
 			if ct==5: ct=0; add_code(driver, fname)
+		time.sleep(1)
 		driver.find_element_by_class_name("hr-monaco-submit").click(); time.sleep(1)
 		print("Waiting for Submission...")
 		while len(driver.find_elements_by_class_name("tc-live-status-wrapper")): time.sleep(1)
 		print("Finished Submitting")
-
+		time.sleep(1)
 		if len(driver.find_elements_by_class_name("congrats-heading")): 
 			print("Submission Passed All Test Cases!")
 			save(f"{int(time.time())}-Pass",ext)
@@ -60,12 +65,13 @@ def upload(driver, fname="code/code.py"):
 
 def login():
 
-	print("OPEN NEW")
+	print("LOGGING IN...")
 
 	options = Options()
+	options.add_argument("--headless")
 	capabilities = options.to_capabilities()
 
-	driver = webdriver.Chrome(desired_capabilities=capabilities)
+	driver = webdriver.Firefox(desired_capabilities=capabilities)
 
 	link = load("link")
 
@@ -116,6 +122,7 @@ def main():
 		except: print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
 
 	if ans[0]=="quit": driver.quit()
+	os.system("rm geckodriver.log")
 
 if __name__=="__main__":
 	main()

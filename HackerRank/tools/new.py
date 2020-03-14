@@ -7,7 +7,7 @@ import re
 import sys
 
 def copyTemplates():
-	system("cp ../../templates/* data")
+	system("cp ../../templates/* code")
 
 def startParser(link, directory):
 	print("Starting Parser...")
@@ -20,7 +20,8 @@ def getProblemName(link):
 	path=urlparse(link).path
 	problem_match = re.match(site["problem_re"],path)
 	if problem_match==None: 
-		raise ValueError("Problem regex failed match")
+		print("Problem regex failed match")
+		return None
 	problem=problem_match.group(1)
 	return problem
 
@@ -56,12 +57,14 @@ def getDirectories(problem):
 
 def makeDirectory(problem):
 	directory = pwd+"/"+problem
+	""" no multiple directory support for now
 	try: mkdir(directory)
 	except:
 		ans = input("Directory Exists! Make Another? (Y to confirm): ")
 		if ans!="Y": exit()
 		directory += f"-({int(time())})"
-		mkdir(directory)
+		mkdir(directory)"""
+	mkdir(directory)
 	mkdir(directory+"/data")
 	save(directory, "current_directory")
 	return directory
@@ -77,9 +80,10 @@ def main(link):
 		directory = makeDirectory(problem)
 		startParser(link, directory)
 
-	except ValueError as err:
-		print("ERROR:",err)
-		exit()
+	except: 
+		print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
+		try: system(f'rm -rf {directory}')
+		except: pass
 	
 	print()
 
