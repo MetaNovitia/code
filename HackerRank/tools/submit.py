@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time, os, sys
-from config import languages, pwd
+from config import languages
 
 def add_code(driver, fname="code/code.py"):
 	driver.find_element_by_class_name("upload-file").click()
@@ -87,10 +87,10 @@ def login():
 def save(fname=None, ext="py"):
 	directory=load("current_directory")
 	if fname==None: fname=int(time.time())
-	target = f"{pwd}/{directory}/{fname}.{ext}"
+	target = f"{directory}/{fname}.{ext}"
 	try: open(target)
 	except FileNotFoundError: 
-		os.system(f"cp code/code.{ext} {target}")
+		os.system(f'cp "code/code.{ext}" "{target}"')
 
 def load(fname):
 	f=open(f"data/{fname}.txt",'r')
