@@ -1,0 +1,20 @@
+{
+    "Title": "Queen's Attack II | HackerRank",
+    "Directory": "../solutions/queens-attack-2",
+    "Links": {
+        "Problem": "https://www.hackerrank.com/challenges/queens-attack-2/problem",
+        "PDF": "https://www.hackerrank.com/rest/contests/master/challenges/queens-attack-2/download_pdf?language=English",
+        "Test Case": "https://www.hackerrank.com/rest/contests/master/challenges/queens-attack-2/download_testcases"
+    },
+    "Data": {
+        "Difficulty": "Medium",
+        "Max Score": "30"
+    },
+    "Status": {
+        "Best Time Complexity": null,
+        "Best Space Complexity": null,
+        "Best CodeGolf Length": null,
+        "Solve Status": null,
+        "Languages Used": null
+    }
+}

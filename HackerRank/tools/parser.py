@@ -3,6 +3,7 @@ from os import system
 from zipfile import ZipFile
 from urllib.request import urlopen
 from json import dumps, loads
+from config import init
 
 class HackerRankParser(HTMLParser):
 
@@ -21,8 +22,7 @@ class HackerRankParser(HTMLParser):
 		self.curr = None			# last seen data category
 		self.level = 0				# level in sidebar
 
-		self.data = {}
-		self.load("init.json")
+		self.data = init
 		self.data["Links"]["Problem"] = link
 		self.data["Directory"] = directory
 
@@ -76,25 +76,25 @@ class HackerRankParser(HTMLParser):
 		print("Downloaded " + filename)
 	
 	def downloadPDF(self):
-		try: self.download(self.data["Links"]["PDF"], self.data["Directory"]+"/problem.pdf")
+		try: self.download(self.data["Links"]["PDF"], self.data["Directory"]+"/data/problem.pdf")
 		except: print("No PDF Data")
 
 	def downloadTestCases(self):
 		try: 
-			fname = self.data["Directory"]+"/test.zip"
+			fname = self.data["Directory"]+"/data/test.zip"
 			self.download(self.data["Links"]["Test Case"], fname)
 			with ZipFile(fname, 'r') as zipObj:
-				zipObj.extractall(self.data["Directory"])
+				zipObj.extractall(self.data["Directory"]+"/data")
 			system("rm \""+fname+"\"")
 		except: print("No Test Case Data")
 
 	def save(self):
-		f = open(self.data["Directory"]+"/problem.json", 'w')
+		f = open(self.data["Directory"]+"/data/problem.json", 'w')
 		f.write(dumps(self.data, indent=4))
 		f.close()
 
 	def load(self, fname=None):
-		if fname==None: fname=self.data["Directory"]+"/problem.json"
+		if fname==None: fname=self.data["Directory"]+"/data/problem.json"
 		f = open(fname, 'r')
 		self.data = loads(f.read())
 		f.close()
