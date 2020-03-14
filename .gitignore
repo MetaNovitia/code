@@ -7,3 +7,8 @@ algorithms_db
 templates
 condense.py
 *.pdf
+*.txt
+input
+output
+Makefile
+__pycache__
