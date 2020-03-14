@@ -10,3 +10,11 @@ sites = {
 		"problem_re":"/challenges/(.*)/problem"
 	}
 }
+
+languages = {
+	"py": "Python 3",
+	"cpp": "C++",
+	"java": "Java",
+	"c": "C",
+	"js": "JavaScript"
+}

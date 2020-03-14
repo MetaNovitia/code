@@ -1,7 +1,6 @@
 from os import system, mkdir
 from config import sites, pwd
 from urllib.parse import urlparse
-from time import time
 import re
 
 def startParser(site, link, directory):
@@ -18,23 +17,6 @@ def getProblemName(site, path):
 		raise ValueError("Problem regex failed match")
 	problem=problem_match.group(1)
 	return problem
-
-def makeDirectory(site, problem):
-	directory = pwd+site["name"]+"/"+problem
-	try: mkdir(pwd+site["name"])
-	except: pass
-	try: mkdir(directory)
-	except:
-		ans = input("Directory Exists! Make Another? (Y to confirm): ")
-		if ans!="Y": exit()
-		directory = pwd+site["name"]+"/"+problem+"-("+str(int(time()))+")"
-		mkdir(directory)
-	
-	f=open("data/current_directory.txt",'w')
-	f.write(directory)
-	f.close()
-
-	return directory
 
 def main():
 

@@ -4,6 +4,7 @@
 algorithms_db
 *.out
 *.in
+*.json
 templates
 condense.py
 *.pdf
