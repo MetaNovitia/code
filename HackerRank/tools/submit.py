@@ -34,7 +34,8 @@ def processCases(driver):
 
 def upload(driver, fname="code/code.py"):
 	try:
-		lang = languages[fname.split(".")[-1]]
+		ext = fname.split(".")[-1]
+		lang = languages[ext]
 		driver.find_element_by_id("react-select-2-input").send_keys(lang+"\n")
 		add_code(driver, fname)
 		time.sleep(1); ct = 0
@@ -48,6 +49,7 @@ def upload(driver, fname="code/code.py"):
 
 		if len(driver.find_elements_by_class_name("congrats-heading")): 
 			print("Submission Passed All Test Cases!")
+			save(f"{int(time.time())}-Pass",ext)
 		else:
 			err = driver.find_elements_by_class_name("compile-error")
 			if len(err): print(err[0].text)
@@ -65,16 +67,11 @@ def login():
 
 	driver = webdriver.Chrome(desired_capabilities=capabilities)
 
-	f=open("data/link.txt",'r')
-	link = f.read().strip()
-	f.close()
+	link = load("link")
 
 	driver.get(link)
 
-	try:
-		f=open("data/password.txt")
-		username,password=f.read().split()
-		f.close()
+	try: username,password=load("password").split()
 	except: print("Add username and password (on separate lines) in data/password.txt")
 	
 	driver.find_element_by_id("auth-login").click()
@@ -87,23 +84,34 @@ def login():
 
 	return driver
 
+def save(fname=None, ext="py"):
+	directory=load("current_directory")
+	if fname==None: fname=int(time.time())
+	target = f"{pwd}/{directory}/{fname}.{ext}"
+	try: open(target)
+	except FileNotFoundError: 
+		os.system(f"cp code/code.{ext} {target}")
+
+def load(fname):
+	f=open(f"data/{fname}.txt",'r')
+	data = f.read().strip()
+	f.close()
+	return data
+
 def main():
 	driver = login()
 	ans = [""]
-	f = open("data/current_directory.txt",'r')
-	directory = f.read().strip()
-	f.close()
+
 	while ans[0]!="end" and ans[0]!="quit":
 		try:
-			print("Command (post/end/quit): ",end="")
+			print("Command (post/save/end/quit): ",end="")
 			ans = input().split()
 			if len(ans)<2: ans.append("py")
 
 			if ans[0] == "post": upload(driver, "code/code."+ans[1])
 			elif ans[0] == "save":
-				if len(ans<3): ans.append(f"{int(time.time())}.py")
-				os.system(f"cp code/code.{ans[1]} {pwd}/{directory}/")
-		
+				if len(ans)<3: ans.append(f"{int(time.time())}")
+				save(ans[2], ans[1])
 		
 		except: print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
 

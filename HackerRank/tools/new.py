@@ -29,6 +29,7 @@ def save(data,fname):
 	f.write(data)
 	f.close()
 
+
 def open_dir(link):
 	save(link, "link")
 	problem = getProblemName(link)

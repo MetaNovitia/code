@@ -7,7 +7,7 @@ blocks: distance queen can travel in a direction
 		clockwise order from top
 		assume origin is bottom left 
 """
-blocks = [n-yq, 0, n-xq, 0, yq-1, 0, xq, 0]
+blocks = [n-yq, 0, n-xq, 0, yq-1, 0, xq-1, 0]
 for i in range(1,8,2): 
 	blocks[i] = min(blocks[i-1],blocks[(i+1)%8])
 
