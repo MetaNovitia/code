@@ -50,8 +50,8 @@ def open_dir(link):
 	problem = getProblemName(link)
 	directory = getDirectories(problem)
 	cache["current_directory"] = directory
-	system(f'cp -rf "{directory}/data/*" {root}/work-folder/data')
-	system(f'cp -rf "{directory}/code/*" {root}/work-folder/code')
+	system(f'cp -r "{site["pwd"]}/{directory}/data/" {root}/work-folder/data')
+	system(f'cp -r "{site["pwd"]}/{directory}/code/" {root}/work-folder/code')
 
 # get list of possible directories
 def getDirectories(problem):
@@ -104,11 +104,13 @@ def new(link):
 			problem = getProblemName(link)
 			directory = makeDirectory(problem)
 			startParser(link, directory)
+			open_dir(link)
 
 		except: 
 			print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
 			try: system(f'rm -rf {directory}')
 			except: pass
+	else: print("no such domain")
 	
 	print()
 

@@ -13,4 +13,7 @@ tasks
 */solutions/*/*-Save.*
 */solutions/*/data/
 
+work-folder/code
+work-folder/data
+
 cache.json
