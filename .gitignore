@@ -12,3 +12,5 @@ __pycache__
 tasks
 */solutions/*/*-Save.*
 */solutions/*/data/
+
+cache.json

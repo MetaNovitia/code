@@ -3,10 +3,9 @@ from os import system
 from zipfile import ZipFile
 from urllib.request import urlopen
 from json import dumps, loads
-from config import init
+from init import init
 
 class HackerRankParser(HTMLParser):
-
 	"""
 	Interested Data:
 		- Title

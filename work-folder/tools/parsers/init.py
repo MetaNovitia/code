@@ -1,21 +1,3 @@
-import sys; sys.path.insert(1, 'Parsers')
-import os
-
-pwd = "../solutions"
-
-site = {
-	"full_prefix":"https://www.hackerrank.com",
-	"problem_re":"/challenges/(.*)/.*"
-}
-
-languages = {
-	"py": "Python 3",
-	"cpp": "C++",
-	"java": "Java",
-	"c": "C",
-	"js": "JavaScript"
-}
-
 init = {
 	"Title": None,
 	"Directory": None,
@@ -33,6 +15,7 @@ init = {
 		"Best Space Complexity": None,
 		"Best CodeGolf Length": None,
 		"Solve Status": None,
-		"Languages Used": None
+		"Languages Used": None,
+		"Categories": None
 	}
 }

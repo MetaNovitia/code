@@ -1,11 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 import time, os, sys
-from config import languages
-
-import logging
-from selenium.webdriver.remote.remote_connection import LOGGER
-LOGGER.setLevel(logging.WARNING)
+from lang import languages
 
 def add_code(driver, fname="code/code.py"):
 	driver.find_element_by_class_name("upload-file").click()
@@ -53,8 +49,16 @@ def upload(driver, fname="code/code.py"):
 		print("Finished Submitting")
 		time.sleep(1)
 		if len(driver.find_elements_by_class_name("congrats-heading")): 
-			print("Submission Passed All Test Cases!")
-			save(f"{int(time.time())}-Pass",ext)
+			ans = ""
+			while True:
+				ans=input("Submission Passed All Test Cases! Save? (Y/N): ")
+				if ans=="Y":
+					name = input("Name: ")
+					if name=="": save(f"{int(time.time())}-Pass",ext)
+					else: save(f"{name}-Pass",ext)		# TODO
+					break
+				elif ans=="N":
+					break
 		else:
 			err = driver.find_elements_by_class_name("compile-error")
 			if len(err): print(err[0].text)
@@ -73,11 +77,11 @@ def login():
 
 	driver = webdriver.Firefox(desired_capabilities=capabilities)
 
-	link = load("link")
+	link = load("link")			# TODO
 
 	driver.get(link)
 
-	try: username,password=load("password").split()
+	try: username,password=load("password").split()			# TODO
 	except: print("Add username and password (on separate lines) in data/password.txt")
 	
 	driver.find_element_by_id("auth-login").click()
@@ -90,34 +94,20 @@ def login():
 
 	return driver
 
-def save(fname=None, ext="py"):
-	directory=load("current_directory")
-	if fname==None: fname=int(time.time())
-	target = f"{directory}/{fname}.{ext}"
-	try: open(target)
-	except FileNotFoundError: 
-		os.system(f'cp "code/code.{ext}" "{target}"')
-
-def load(fname):
-	f=open(f"data/{fname}.txt",'r')
-	data = f.read().strip()
-	f.close()
-	return data
-
 def main():
 	driver = login()
 	ans = [""]
 
 	while ans[0]!="end" and ans[0]!="quit":
 		try:
-			print("Command (post/save/end/quit): ",end="")
+			print("command [logged in]: ",end="")
 			ans = input().split()
 			if len(ans)<2: ans.append("py")
 
 			if ans[0] == "post": upload(driver, "code/code."+ans[1])
 			elif ans[0] == "save":
 				if len(ans)<3: ans.append(f"{int(time.time())}-Save")
-				save(ans[2], ans[1])
+				save(ans[2], ans[1])		# TODO
 		
 		except: print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
 
