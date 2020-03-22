@@ -1,9 +1,9 @@
 from os import system, mkdir, listdir, strerror
-from config import sites, cache_init
+from config import sites, cache_init, root
 from urllib.parse import urlparse
 from time import time
-from root import root
 import re, sys, json, errno, driver
+from checker_helper import cpp_checker, py_checker
 
 site = {}
 cache = cache_init
@@ -118,6 +118,10 @@ def post(ext="py"):
 		driver.getDriver(cache),
 		root
 	)
+
+def check(diff=False, ext="py"):
+	if   ext=="py": py_checker(root, diff)
+	elif ext=="cpp": cpp_checker(root, diff)
 
 # make new problen
 def new(link):

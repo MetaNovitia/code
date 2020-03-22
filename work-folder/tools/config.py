@@ -1,6 +1,5 @@
-import sys
-from root import root
-
+import sys, os
+root = "/".join(os.path.realpath(__file__).split("/")[:-3])
 sys.path.insert(1, f'{root}/work-folder/tools/parsers')
 sys.path.insert(1, f'{root}/work-folder/tools/checkers')
 import checker_HackerRank
@@ -33,4 +32,4 @@ sites = {
 	}
 }
 
-help_string = "new [link]\nopen [link]\nlogin\nsave (ext) (fname)\nclear\nhelp"
+help_string = "new [link]\nopen [link]\nlogin\nsave (ext) (fname)\nclear\nrm\npost\nhelp"
