@@ -55,7 +55,7 @@ $ ./run.py
 
 ## Commands:
 ```
-- new [link]            : create new directory
+- new [link]            : create new directory with problem pdf and sample i/o (ignored by git)
 - open [link]           : open directory associated with link
 - login                 : logs in to current domain
 - save [ext?] [fname?]  : saves to solutions folder
