@@ -16,4 +16,7 @@ tasks
 work-folder/code
 work-folder/data
 
+trash/*
+
 cache.json
+passwords.json

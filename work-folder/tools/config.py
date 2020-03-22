@@ -7,11 +7,11 @@ import checker_HackerRank
 import parser_HackerRank
 
 cache_init = {
-	"current_directory": None,
+	"directory": None,
 	"problem": None,
 	"domain": None,
 	"link": None,
-	"passwords": {}
+	"profile": None
 }
 
 sites = {
@@ -32,3 +32,5 @@ sites = {
 		"parser": None
 	}
 }
+
+help_string = "new [link]\nopen [link]\nlogin\nsave (ext) (fname)\nclear\nhelp"

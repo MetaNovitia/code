@@ -1,15 +1,16 @@
-from os import system, mkdir, listdir
+from os import system, mkdir, listdir, strerror
 from config import sites, cache_init
 from urllib.parse import urlparse
 from time import time
 from root import root
-import re, sys, json
+import re, sys, json, errno, driver
 
 site = {}
 cache = cache_init
 
 # copy new templates to code
 def copyTemplates():
+	system(f"rm -rf {root}/work-folder/code/*")
 	system(f"cp {root}/templates/* {root}/work-folder/code")
 
 # start parsing site for new directory
@@ -38,90 +39,104 @@ def saveCache():
 
 # load from cache
 def loadCache():
+	global cache, site
 	try:
 		f=open(f"{root}/work-folder/cache.json",'r')
 		cache = json.loads(f.read())
+		site = sites[cache["domain"]]
 		f.close()
 	except: saveCache()
 
 # open directory and copy data
 def open_dir(link):
-	cache["link"] = link
-	problem = getProblemName(link)
-	directory = getDirectories(problem)
-	cache["current_directory"] = directory
-	system(f'cp -r "{site["pwd"]}/{directory}/data/" {root}/work-folder/data')
-	system(f'cp -r "{site["pwd"]}/{directory}/code/" {root}/work-folder/code')
+	if checkLink(link):
+		system(f'cp -r "{cache["directory"]}/data/" {root}/work-folder/data')
+		system(f'cp -r "{cache["directory"]}/code/" {root}/work-folder/code')
 
-# get list of possible directories
-def getDirectories(problem):
+# get list of possible files/directories
+def choose(directory,re_string=".*"):
 	dirs=[]
-	for solution in listdir(site["pwd"]):
-		if solution.startswith(problem):
+	for solution in listdir(directory):
+		if re.match(re_string, solution):
 			dirs.append(solution)
 	n = len(dirs)
-	if n==0: return None
-	if n==1: return dirs[0]
+	if n==0: raise FileNotFoundError(errno.ENOENT, strerror(errno.ENOENT), directory)
 
-	for d in range(n): 
-		print(f"{d}: {dirs[d]}")
+	for d in range(n): print(f"{d}: {dirs[d]}")
 	print()
 	choice = -1
 	while choice not in range(n): 
-		try: choice = int(input("Choose Directory: "))
+		try: choice = int(input("Choose Directory/File: "))
 		except: pass
-	return dirs[choice]
+	return directory+"/"+dirs[choice]
 
-# make new directory
-def makeDirectory(problem):
-	directory = site["pwd"]+"/"+problem
-	""" no multiple directory support for now
-	try: mkdir(directory)
-	except:
-		ans = input("Directory Exists! Make Another? (Y to confirm): ")
-		if ans!="Y": exit()
-		directory += f"-({int(time())})"
-		mkdir(directory)"""
+# make new directory TODO: multiple for one problem
+def makeDirectory(directory):
 	mkdir(directory)
 	mkdir(directory+"/data")
 	mkdir(directory+"/code")
-	cache["current_directory"] = directory
 	return directory
+
+# check if link is valid
+def checkLink(link):
+	global site
+	domain = urlparse(link).netloc
+	if domain in sites:
+		site = sites[domain]
+		cache["domain"] = domain
+		cache["link"] = link
+		cache["problem"] = getProblemName(link)
+		cache["directory"] = site["pwd"]+"/"+cache["problem"]
+		saveCache()
+		return True
+	print("no such domain")
+	return False
+
+# save solution to database
+def saveSolution(ext="py", fname=None):
+	if fname==None: fname=f'{int(time())}-Save'
+	target = f'{cache["directory"]}/code/{fname}.{ext}'
+	try: 
+		f=open(target,'r')
+		f.close()
+	except FileNotFoundError: 
+		system(f'cp "{root}/work-folder/code/code.{ext}" "{target}"')
+
+# remove solution
+def removeFile():
+	target = choose(f'{cache["directory"]}/code')
+	system(f'mv "{target}" "{root}/trash"')
+
+def login():
+	site["checker"].login(driver.getDriver(cache), root)
+
+def post(ext="py"):
+	site["checker"].upload(
+		saveSolution, 
+		f"{root}/work-folder/code/code.{ext}",
+		cache["link"],
+		driver.getDriver(cache),
+		root
+	)
 
 # make new problen
 def new(link):
 
-	global site
+	print("\nRetrieving Problem Data...\n")
 
-	print()
-	cache["link"] = link
-	print("Retrieving Problem Data")
-
-	domain = urlparse(link).netloc
-	if domain in sites:
-		site = sites[domain]
+	if checkLink(link):
 		try: 
-			problem = getProblemName(link)
-			directory = makeDirectory(problem)
-			startParser(link, directory)
-			open_dir(link)
+			makeDirectory(cache["directory"])
+			startParser(cache["link"], cache["directory"])
+			open_dir(cache["link"])
+			copyTemplates()
 
 		except: 
 			print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
-			try: system(f'rm -rf {directory}')
+			try: system(f'rm -rf {cache["directory"]}')
 			except: pass
-	else: print("no such domain")
 	
 	print()
-
-# save solution to database
-def saveSolution(fname=None, ext="py"):
-	directory=load("current_directory")
-	if fname==None: fname=int(time.time())
-	target = f"{directory}/{fname}.{ext}"
-	try: open(target)
-	except FileNotFoundError: 
-		os.system(f'cp "code/code.{ext}" "{target}"')
 
 if __name__ == "__main__":
 
