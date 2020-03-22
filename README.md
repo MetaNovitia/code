@@ -57,8 +57,9 @@ $ ./run.py
 ```
 - new [link]            : create new directory with problem pdf and sample i/o (ignored by git)
 - open [link]           : open directory associated with link
+- vim [ext?]			: open code.[ext] in vim (default ext=py)
 - login                 : logs in to current domain
-- save [ext?] [fname?]  : saves to solutions folder
+- save [ext?] [fname?]  : saves to solutions folder (default fname=time())
 - clear                 : clear work-folder code and copy templates
 - rm                    : remove file from directory (choose in next prompt)
 - post [ext?]           : post solution online (headless) and return feedback
@@ -70,6 +71,6 @@ $ ./run.py
 ## Command Arguments 
 ```
 - link                  : link of problem
-- ext                   : solution file extension (current: py, cpp)
-- fname                 : file name to save to
+- ext                   : solution file extension [py, cpp] (default: py)
+- fname                 : file name to save to (default: current time)
 ```

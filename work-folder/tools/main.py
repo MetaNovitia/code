@@ -16,6 +16,7 @@ if __name__ == "__main__":
 		try: 
 			if   option=="new"	: tools.new(cmd[0])
 			elif option=="open"	: tools.open_dir(cmd[0])
+			elif option=="vim"	: tools.vim(*cmd)
 			elif option=="login": tools.login()
 			elif option=="save"	: tools.saveSolution(*cmd)
 			elif option=="clear": tools.copyTemplates()

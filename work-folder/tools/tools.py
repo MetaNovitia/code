@@ -53,6 +53,9 @@ def open_dir(link):
 		system(f'cp -r "{cache["directory"]}/data/" {root}/work-folder/data')
 		system(f'cp -r "{cache["directory"]}/code/" {root}/work-folder/code')
 
+def vim(ext="py"):
+	system(f'bash {root}/work-folder/tools/vim.sh {root}/work-folder/code/code.{ext}')
+
 # get list of possible files/directories
 def choose(directory,re_string=".*"):
 	dirs=[]
