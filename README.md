@@ -27,7 +27,7 @@ $ python3
 >> sys.executable
 >> quit()
 ```
-The clang compiler on MacOS does not have bits/stdc++.h header. XCode CLI is needed to install gcc on MacOS. After installing XCode CLI, install gcc using Homebrew:
+The clang compiler on MacOS does not have bits/stdc++.h header. __XCode CLI__ is needed to install __gcc__ on MacOS. After installing XCode CLI, install gcc using Homebrew:
 
 ```
 $ brew install gcc
