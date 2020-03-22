@@ -3,7 +3,7 @@
 Check your solutions to online judges (e.g. HackerRank) from your terminal! Uses a headless Firefox browser to submit code. Downloads problem file and sample inputs/outputs when you make a new directory. You can also check against sample inputs locally.
 
 ## Requirements
-Currently developed on MacOS 10.15.3
+Currently being developed on MacOS 10.15.3
 
 
 - [Python 3](https://www.python.org/downloads/) (with pip3)
