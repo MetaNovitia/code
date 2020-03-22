@@ -11,7 +11,7 @@ def cpp_checker(root, diff):
 	inputs = sorted(listdir(i_dir))
 	outputs = sorted(listdir(o_dir))
 
-	system(f'g++-9 -std=c++11 {pwd}/code/code.cpp -o {pwd}/code/code')
+	system(f'bash {pwd}/tools/compile_cpp.sh {pwd}/code/code.cpp {pwd}/code/code')
 
 	for ind in range(len(inputs)):
 		i = inputs[ind]

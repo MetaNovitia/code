@@ -7,7 +7,8 @@ Currently being developed on MacOS 10.15.3
 
 
 - [Python 3](https://www.python.org/downloads/) (with pip3)
-- gcc-9 (needed [XCode CLI](https://developer.apple.com/download/more/) on MacOS)
+- gcc (needed [XCode CLI](https://developer.apple.com/download/more/) on MacOS) 
+- Windows: [Cygwin](https://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/) (includes gcc)
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 - [Firefox Gecko Driver](https://github.com/mozilla/geckodriver/releases) (needs to be in $PATH)
 - Selenium (install in setup)
@@ -27,6 +28,8 @@ $ python3
 >> sys.executable
 >> quit()
 ```
+Installing Cygwin on [Windows](https://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/) may allow UNIX type commands on the Command Prompt, and also install gcc.
+
 The clang compiler on MacOS does not have bits/stdc++.h header. __XCode CLI__ is needed to install __gcc__ on MacOS. After installing XCode CLI, install gcc using Homebrew:
 
 ```
