@@ -32,4 +32,16 @@ sites = {
 	}
 }
 
-help_string = "new [link]\nopen [link]\nlogin\nsave (ext) (fname)\nclear\nrm\npost\nhelp"
+help_string = """
+- new [link]            : create new directory with problem pdf and sample i/o (ignored by git)
+- open [link]           : open directory associated with link
+- vim [ext?]            : open code.[ext] in vim (default ext=py)
+- login                 : logs in to current domain
+- save [ext?] [fname?]  : saves to solutions folder (default fname=time())
+- clear                 : clear work-folder code and copy templates
+- rm                    : remove file from directory (choose in next prompt)
+- post [ext?]           : post solution online (headless) and return feedback
+- check	[ext?]          : check solution against sample input and output (diff)
+- run [ext?]            : run solution using sample input (no diff)
+- help                  : print possible commands
+"""

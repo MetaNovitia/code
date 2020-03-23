@@ -7,11 +7,14 @@ Currently being developed on MacOS 10.15.3
 
 
 - [Python 3](https://www.python.org/downloads/) (with pip3)
-- gcc (needed [XCode CLI](https://developer.apple.com/download/more/) on MacOS) 
-- Windows: [Cygwin](https://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/) (includes gcc)
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 - [Firefox Gecko Driver](https://github.com/mozilla/geckodriver/releases) (needs to be in $PATH)
 - Selenium (install in setup)
+
+Optional (for compiling cpp solutions):
+
+- gcc (needed [XCode CLI](https://developer.apple.com/download/more/) on MacOS) 
+- Windows: [Cygwin](https://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/) (includes gcc)
 
 
 ## Procedure
@@ -28,6 +31,9 @@ $ python3
 >> sys.executable
 >> quit()
 ```
+
+The Firefox __geckodriver__ will have to be in the PATH variable for the program to find it. This can be achieved by either adding the path to the directory where the geckodriver is, or moving geckodriver to one of the paths (e.g. /usr/local/bin).
+
 Installing Cygwin on [Windows](https://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/) may allow UNIX type commands on the Command Prompt, and also install gcc.
 
 The clang compiler on MacOS does not have bits/stdc++.h header. __XCode CLI__ is needed to install __gcc__ on MacOS. After installing XCode CLI, install gcc using Homebrew:
@@ -40,16 +46,18 @@ Or if there are still errors with header files, do:
 $ brew upgrade gcc
 ```
 
-The Firefox __geckodriver__ will have to be in the PATH variable for the program to find it. This can be achieved by either adding the path to the directory where the geckodriver is, or moving geckodriver to one of the paths (e.g. /usr/local/bin).
-
 ### <a id="setup">Setup</a>:
 ```shell
 $ pip3 install selenium
-$ chmod 755 run.py
 ```
 
 ### Run:
 ```shell
+$ python3 run.py
+```
+or give permissions to script and run without including python3 in the future:
+```shell
+$ chmod 755 run.py
 $ ./run.py
 ```
 
@@ -57,7 +65,7 @@ $ ./run.py
 ```
 - new [link]            : create new directory with problem pdf and sample i/o (ignored by git)
 - open [link]           : open directory associated with link
-- vim [ext?]			: open code.[ext] in vim (default ext=py)
+- vim [ext?]            : open code.[ext] in vim (default ext=py)
 - login                 : logs in to current domain
 - save [ext?] [fname?]  : saves to solutions folder (default fname=time())
 - clear                 : clear work-folder code and copy templates

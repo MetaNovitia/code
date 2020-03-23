@@ -20,3 +20,5 @@ trash/*
 
 cache.json
 passwords.json
+
+push.py
