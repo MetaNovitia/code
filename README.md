@@ -1,13 +1,13 @@
 # Automatic Checker
 
-Check your solutions to online judges (e.g. HackerRank) from your terminal! Uses a headless Firefox browser to submit code. Downloads problem file and sample inputs/outputs when you make a new directory. You can also check against sample inputs locally.
+Check your solutions to online judges (e.g. HackerRank) from your CLI! Uses a headless Firefox browser to submit code. Downloads problem file and sample inputs/outputs when you make a new directory. You can also check against sample inputs locally.
 
 ## Requirements
 Currently being developed on MacOS 10.15.3
 
 - [Python 3](https://www.python.org/downloads/) (with pip3)
 
-For Submitting from Terminal:
+For Submitting from CLI:
 
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 - [Firefox Gecko Driver](https://github.com/mozilla/geckodriver/releases) (needs to be in $PATH)
