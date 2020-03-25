@@ -20,14 +20,14 @@ if __name__ == "__main__":
 			elif option=="open"	: tools.open_dir(cmd[0])
 			elif option=="vim"	: tools.vim(*cmd)
 			elif option=="view"	: tools.view(*cmd)
+			elif option=="login": tools.login()
+			elif option=="post"	: tools.post(*cmd)
 			elif option=="clear": tools.copyTemplates()
 			elif option=="check": tools.check(True, *cmd)
 			elif option=="run"	: tools.check(False, *cmd)
 			elif option=="save"	: tools.saveSolution(*cmd)
 			elif option=="rm"	: tools.removeFile()
 			elif option=="help"	: print(help_string)
-			elif option=="login": tools.login()
-			elif option=="post"	: tools.post(*cmd)
 
 		except: print(
 			f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} "+

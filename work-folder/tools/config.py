@@ -35,7 +35,8 @@ sites = {
 help_string = """
 - new [link]            : create new directory with problem pdf and sample i/o (ignored by git)
 - open [link]           : open directory associated with link
-- vim [ext?]            : open code.[ext] in vim (default ext=py)
+- vim [ext?]            : open code.[ext] in vim
+- view [ftype?]			: view a file (from pdf reader or readonly vim)
 - login                 : logs in to current domain
 - save [ext?] [fname?]  : saves to solutions folder (default fname=time())
 - clear                 : clear work-folder code and copy templates
