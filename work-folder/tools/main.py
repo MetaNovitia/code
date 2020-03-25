@@ -23,11 +23,11 @@ if __name__ == "__main__":
 			elif option=="clear": tools.copyTemplates()
 			elif option=="check": tools.check(True, *cmd)
 			elif option=="run"	: tools.check(False, *cmd)
-			elif option=="login": tools.login()
-			elif option=="post"	: tools.post(*cmd)
 			elif option=="save"	: tools.saveSolution(*cmd)
 			elif option=="rm"	: tools.removeFile()
 			elif option=="help"	: print(help_string)
+			elif option=="login": tools.login()
+			elif option=="post"	: tools.post(*cmd)
 
 		except: print(
 			f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} "+
@@ -41,7 +41,7 @@ if __name__ == "__main__":
 		tools.site["checker"].driver.quit()
 
 	try: 
-		f=open(geckodriver.log,'r')
+		f=open("geckodriver.log",'r')
 		f.close()
 		os.system("rm geckodriver.log")
 	except: pass

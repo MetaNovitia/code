@@ -5,8 +5,10 @@ Check your solutions to online judges (e.g. HackerRank) from your terminal! Uses
 ## Requirements
 Currently being developed on MacOS 10.15.3
 
-
 - [Python 3](https://www.python.org/downloads/) (with pip3)
+
+For Submitting from Terminal:
+
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 - [Firefox Gecko Driver](https://github.com/mozilla/geckodriver/releases) (needs to be in $PATH)
 - Selenium (install in setup)
