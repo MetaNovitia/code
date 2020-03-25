@@ -181,7 +181,7 @@ def view(choice=None):
 				if choice == "": return
 				n_choice = -1
 
-		system(f'vim -R {data_dir}/{files[choice]}')
+		system(f'vim -R {data_dir}/{files[n_choice]}')
 
 
 

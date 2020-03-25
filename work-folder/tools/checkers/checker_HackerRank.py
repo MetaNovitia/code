@@ -17,12 +17,9 @@ def processCases():
 	for tab in cases:
 		tab.click()
 		err = driver.find_elements_by_class_name("compiler-message__value")
-		ct=0
 		while len(err)==0: 
 			time.sleep(0.1)
 			err = driver.find_elements_by_class_name("compiler-message__value")
-			ct+=1
-			if(ct==5): print(tab.text+" unread")
 
 		if len(err):
 			if err[0].text not in total: 
