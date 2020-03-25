@@ -52,6 +52,7 @@ $ pip3 install selenium
 ```
 
 ### Run:
+Inside the root folder of this directory:
 ```shell
 $ python3 run.py
 ```

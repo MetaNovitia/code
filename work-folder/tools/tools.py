@@ -1,8 +1,8 @@
 from os import system, mkdir, listdir, strerror
-from config import sites, cache_init, root
+from config import sites, cache_init, root, view_prompt, view_prompt_ans
 from urllib.parse import urlparse
 from time import time
-import re, sys, json, errno, driver
+import re, sys, json, errno, driver, webbrowser
 from checker_helper import cpp_checker, py_checker
 
 site = {}
@@ -50,11 +50,27 @@ def loadCache():
 # open directory and copy data
 def open_dir(link):
 	if checkLink(link):
+		system(f'rm -r {root}/work-folder/data/*')
+		system(f'rm -r {root}/work-folder/code/*')
 		system(f'cp -r "{cache["directory"]}/data/" {root}/work-folder/data')
 		system(f'cp -r "{cache["directory"]}/code/" {root}/work-folder/code')
+		copyTemplates()
 
-def vim(ext="py"):
-	system(f'bash {root}/work-folder/tools/vim.sh {root}/work-folder/code/code.{ext}')
+def vim(ext=None):
+	fname = f"code.{ext}"
+	if ext==None:
+		choice=-1
+		code_dir = f"{root}/work-folder/code"
+		files = listdir(code_dir)
+		n = len(files)
+		prompt = "\n".join([f"{i} {files[i]}" for i in range(n)])
+		print(prompt)
+		while choice not in range(n):
+			try: choice = int(input("Choice: "))
+			except: choice = -1
+		fname = files[choice]
+
+	system(f'bash {root}/work-folder/tools/vim.sh {root}/work-folder/code/{fname}')
 
 # get list of possible files/directories
 def choose(directory,re_string=".*"):
@@ -70,7 +86,7 @@ def choose(directory,re_string=".*"):
 	choice = -1
 	while choice not in range(n): 
 		try: choice = int(input("Choose Directory/File: "))
-		except: pass
+		except: choice = -1
 	return directory+"/"+dirs[choice]
 
 # make new directory TODO: multiple for one problem
@@ -125,6 +141,49 @@ def post(ext="py"):
 def check(diff=False, ext="py"):
 	if   ext=="py": py_checker(root, diff)
 	elif ext=="cpp": cpp_checker(root, diff)
+
+def view(choice=None):
+
+	n = len(view_prompt)
+	prompt = "\n".join([f"{i} {view_prompt[i]}" for i in range(n)])
+
+	try: n_choice = int(choice)
+	except: n_choice = -1
+	while( 	n_choice not in range(n) and 
+			choice not in view_prompt_ans):
+		try: 
+			print(prompt+"\n")
+			choice = input("Choice: ")
+			n_choice = int(choice)
+		except: n_choice = -1
+		if choice=="": return
+	if n_choice in range(n): choice = view_prompt_ans[n_choice]
+	
+	# opener = f'{root}/work-folder/tools/file_opening.sh'
+	if   choice=="pdf":
+		pdf_name = f'{root}/work-folder/data/problem.pdf'
+		system(f'open {pdf_name}')
+
+	elif choice=="i" or choice=="o" or choice=="sol":
+		if choice=="sol": data_dir = f'{cache["directory"]}/code'
+		else: data_dir = f'{root}/work-folder/data/{["in","out"][choice=="o"]}put'
+		files = listdir(data_dir)
+
+		n = len(files)
+		prompt = "\n".join([f"{i} {files[i]}" for i in range(n)])
+		print(prompt)
+		n_choice=-1
+		while n_choice not in range(n):
+			try: 
+				choice = input("Choice: ")
+				n_choice = int(choice)
+			except: 
+				if choice == "": return
+				n_choice = -1
+
+		system(f'vim -R {data_dir}/{files[choice]}')
+
+
 
 # make new problen
 def new(link):

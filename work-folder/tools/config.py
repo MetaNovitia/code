@@ -45,3 +45,17 @@ help_string = """
 - run [ext?]            : run solution using sample input (no diff)
 - help                  : print possible commands
 """
+
+view_prompt = [
+	"Problem PDF",
+	"Sample Input",
+	"Sample Ouptut",
+	"Saved Solutions"
+]
+
+view_prompt_ans = [
+	"pdf",
+	"i",
+	"o",
+	"sol"
+]

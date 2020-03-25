@@ -8,6 +8,8 @@ if __name__ == "__main__":
 	except: pass
 	try: os.mkdir(f'{root}/work-folder/data')
 	except: pass
+	try: os.mkdir(f'{root}/trash')
+	except: pass
 
 	cmd = [" "]
 	tools.loadCache()
@@ -17,13 +19,14 @@ if __name__ == "__main__":
 			if   option=="new"	: tools.new(cmd[0])
 			elif option=="open"	: tools.open_dir(cmd[0])
 			elif option=="vim"	: tools.vim(*cmd)
-			elif option=="login": tools.login()
-			elif option=="save"	: tools.saveSolution(*cmd)
+			elif option=="view"	: tools.view(*cmd)
 			elif option=="clear": tools.copyTemplates()
-			elif option=="rm"	: tools.removeFile()
-			elif option=="post"	: tools.post(*cmd)
 			elif option=="check": tools.check(True, *cmd)
 			elif option=="run"	: tools.check(False, *cmd)
+			elif option=="login": tools.login()
+			elif option=="post"	: tools.post(*cmd)
+			elif option=="save"	: tools.saveSolution(*cmd)
+			elif option=="rm"	: tools.removeFile()
 			elif option=="help"	: print(help_string)
 
 		except: print(
