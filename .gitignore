@@ -16,6 +16,8 @@ tasks
 work-folder/code
 work-folder/data
 
+geckodriver.log
+
 trash/*
 
 cache.json
