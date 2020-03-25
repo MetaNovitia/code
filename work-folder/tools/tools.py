@@ -197,6 +197,8 @@ def new(link):
 			open_dir(cache["link"])
 			copyTemplates()
 
+		except FileExistsError:
+			print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
 		except: 
 			print(f"ERR: {sys.exc_info()[0]} {sys.exc_info()[1]} line: {sys.exc_info()[2].tb_lineno}")
 			try: system(f'rm -rf {cache["directory"]}')
